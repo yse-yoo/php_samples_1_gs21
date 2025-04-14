@@ -5,9 +5,10 @@ require_once '../lib/Database.php';
 // POSTチェック
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // TODO: idを取得
-    $id = 0;
+    $id = $_POST['id'];
     // TODO: passwordを取得
-    $password = "";
+    $password = $_POST['password'];
+    var_dump($id, $password);
     $result = update($id, $password);
 }
 
