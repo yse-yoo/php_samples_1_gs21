@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     // TODO: passwordを取得
     $password = $_POST['password'];
-    var_dump($id, $password);
+    // var_dump($id, $password);
     $result = update($id, $password);
 }
 
@@ -17,12 +17,12 @@ function update($id, $password)
 {
     try {
         // TODO: パスワードハッシュ化
-        $hash = "";
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         // DB接続
         $pdo = Database::getInstance();
         // TODO: ユーザ情報を更新するSQLを作成
         // プレスホルダー（:id） 
-        $sql = "";
+        $sql = "UPDATE users SET password = :password WHERE id = :id";
         // SQL事前準備
         $stmt = $pdo->prepare($sql);
         // プレスホルダー（:id） のパラメータを引数にSQL実行
