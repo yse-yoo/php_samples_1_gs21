@@ -4,7 +4,7 @@ require_once '../lib/Database.php';
 
 if (!empty($_GET['id'])) {
     // TODO: GETパラメータからユーザIDを取得
-    $user_id = 0;
+    $user_id = $_GET['id'];
     $user = find($user_id);
 }
 
@@ -16,13 +16,13 @@ function find($id)
         $pdo = Database::getInstance();
         // TODO: ユーザIDを指定してユーザ情報を取得するSQLを作成
         // プレスホルダー（:id）
-        $sql = "";
+        $sql = "SELECT * FROM users WHERE id = :id";
         // TODO: SQL事前準備
-        $stmt = null;
+        $stmt = $pdo->prepare($sql);
         // TODO: プレスホルダー（:id） のパラメータを引数にSQL実行
-        $stmt;
+        $stmt->execute(['id' => $id]);
         // TODO: Userデータを１件取得
-        $user = [];
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user;
     } catch (PDOException $e) {
         error_log($e->getMessage());
