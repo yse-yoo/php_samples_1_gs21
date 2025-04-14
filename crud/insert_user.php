@@ -5,6 +5,7 @@ require_once '../lib/Database.php';
 $user_id = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // POSTリクエストの場合、ユーザデータを登録
+    // var_dump($_POST);
     $user_id = insert($_POST);
 }
 
@@ -13,12 +14,14 @@ function insert($posts)
 {
     try {
         // TODO: パスワードハッシュ化
-        $posts['password'];
+        $posts['password'] = password_hash($posts['password'], PASSWORD_DEFAULT);
+        // var_dump($posts['password']);
         // DB接続
         $pdo = Database::getInstance();
         // TODO: ユーザデータを登録するSQLを作成
         // プレースホルダー（:account_name, :email, :display_name, :password）
-        $sql = "";
+        $sql = "INSERT INTO users (account_name, email, display_name, password) 
+                VALUES (:account_name, :email, :display_name, :password)";
         // SQLを設定して、プリペアードステートメントを生成
         $stmt = $pdo->prepare($sql);
         // SQL実行
