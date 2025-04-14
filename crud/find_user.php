@@ -21,6 +21,10 @@ function find($id)
         $stmt = $pdo->prepare($sql);
         // TODO: プレスホルダー（:id） のパラメータを引数にSQL実行
         $stmt->execute(['id' => $id]);
+
+        // SQLインジェクション
+        // $sql = "SELECT * FROM users WHERE id = $id";
+        // $stmt = $pdo->query($sql);
         // TODO: Userデータを１件取得
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user;
